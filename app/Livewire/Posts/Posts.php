@@ -12,6 +12,11 @@ class Posts extends Component
     #[Locked]
     public $id;
 
+    public $title = 'Edit Post';
+
+    public $post; 
+    public $header;
+
     #[On('confDelete')]
     public function deletion($id)
     {
@@ -23,14 +28,40 @@ class Posts extends Component
         
     }
 
+    #[On('edit')]
+    public function editPost($id)
+    {
+        $this->id = $id;
+        $post = Post::findOrFail($this->id);
+        $this->post = $post->post;
+        $this->header = $post->header;
+    }
+
+    public function cancel()
+    {
+        $this->reset();
+        $this->resetErrorBag();
+    }
+
+    public function updatePost($id)
+    {
+
+        $this->id = $id;
+        $post = Post::find($this->id);
+        $post->update([
+
+            'post' => $this->post,
+            'header' => $this->header,
+
+        ]);        
+
+    }
 
     
     #[On('postCreated')]
     public function render()
     {
-
-        $post = Post::all();
-
-        return view('livewire.posts.posts',compact('post'));
+        $all_post = Post::all();
+        return view('livewire.posts.posts',compact('all_post'));
     }
 }

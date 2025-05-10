@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 
 use App\Models\Post;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -12,7 +13,7 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     /**
      * A basic feature test example.
@@ -52,9 +53,51 @@ class PostTest extends TestCase
         Livewire::test('posts.posts')
         ->assertStatus(200);
 
+    }
+
+    public function test_edit_post()
+    {
+
+        $post = Post::create([
+            'header' => 'Test Header',
+            'post' => 'This is a test post.',
+        ]);
+
+       
+        Livewire::test('posts.posts')
+            ->dispatch('edit', $post->id)
+            ->assertSet('id', $post->id)
+            ->assertSet('header', 'Test Header')
+            ->assertSet('post', 'This is a test post.');
 
     }
 
-    
+    public function test_update_user_post()
+    {
+
+        $post=Post::create([
+            'header' => 'Test Header',
+            'post' => 'This is a test post.',
+        ]);
+
+        Livewire::test('posts.posts')
+        ->call('editPost',$post->id)
+        ->set('header','post')
+        ->set('post','lorem ipsum')
+        ->call('updatePost',$post->id)
+        ->assertSet('header','post');
+
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $post->id,
+            'header' => 'Post',
+            'post' => 'lorem ipsum'
+        ]);
+
+
+
+    }
+
+
 
 }

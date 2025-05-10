@@ -1,38 +1,45 @@
-<table class="table table-bordered text-center mb-0">
+
+
+<table class="table table-bordered mb-0">
     <thead class="table-light">
         <tr>
-            <th>Header</th>
-            <th>Action</th>
+            <th class="text-start">Header</th>
+            <th class="text-center">Action</th>
         </tr>
     </thead>
-    @forelse ( $post as $posts)
-    <tbody wire:key='key-{{$posts->id}}'>
+    @forelse ($all_post as $posts)
+        <tbody wire:key='key-{{$posts->id}}'>
+            <tr>
+                <td class="text-start">{{$posts->header}}</td>
+                
+                <td class="text-center">
+                    
+                    <button type="button" class="btn btn-danger btn-sm" wire:click="$dispatch('deleteOpt', { id: {{ $posts->id }}, name: '{{ $posts->header }}' })">
+                        Delete
+                    </button> 
+                   
+    
+                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editpost" wire:click="$dispatch('edit', { id: {{ $posts->id }} })">
+                        Edit
+                     </button>
+                     
+                        @include('livewire.posts.edit-post')
+                     
+                    <button type="button" class="btn btn-success btn-sm">
+                        View Post
+                    </button>
+                </td>
+    
+            </tr>
+        </tbody>
+    @empty
         <tr>
-            <td>{{$posts->header}}</td>
-            <td>
-                <button type="button" class="btn btn-danger btn-sm" wire:click="$dispatch('deleteOpt', { id: {{ $posts->id }}, name: '{{ $posts->header }}' })">
-                    Delete
-                </button>
-
-                <button type="button" class="btn btn-info btn-sm">
-                    Edit
-                </button>
-
-                <button type="button" class="btn btn-success btn-sm">
-                    View Post
-                </button>
-
-            </td>
+            <td colspan="2" class="text-center">empty</td>
         </tr>
-        @empty
-
-        <tr>
-            <td colspan="3" class="text-center">empty</td>
-        </tr>
-
-        @endforelse
-    </tbody>
+    @endforelse
 </table>
+
+
 
 
 @script

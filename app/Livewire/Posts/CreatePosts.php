@@ -35,7 +35,7 @@ class CreatePosts extends Component
 
         DB::commit();
 
-        $this->hardReset();
+        $this->cancel();
         $this->dispatch('postCreated');
 
        }catch(\Exception $e)
@@ -47,8 +47,7 @@ class CreatePosts extends Component
 
     }
 
-
-    public function hardReset()
+    public function cancel()
     {
         $this->reset();
         $this->resetErrorBag();
@@ -56,9 +55,6 @@ class CreatePosts extends Component
 
     public function render()
     {
-
-
-
         return view('livewire.posts.create-posts');
     }
 }
