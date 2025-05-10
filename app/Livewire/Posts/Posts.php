@@ -54,6 +54,14 @@ class Posts extends Component
             'header' => $this->header,
 
         ]);        
+    }
+
+    public function viewUserPosts($id)
+    {
+        
+        $posts = Post::find($id);
+        $this->post = $posts->post;
+        $this->header = $posts->header;
 
     }
 

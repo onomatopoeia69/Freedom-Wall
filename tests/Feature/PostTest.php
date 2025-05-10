@@ -98,6 +98,22 @@ class PostTest extends TestCase
 
     }
 
+    public function test_user_view_posts()  
+    {
+
+        $post =Post::create([
+            'header' => 'Test Header',
+            'post' => 'This is a test post.',
+        ]);
+
+        Livewire::test('posts.posts')
+        ->call('viewUserPosts',$post->id)
+        ->assertSee('Test Header');
+
+
+
+    }
+
 
 
 }

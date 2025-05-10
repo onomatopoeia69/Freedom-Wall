@@ -25,9 +25,13 @@
                      
                         @include('livewire.posts.edit-post')
                      
-                    <button type="button" class="btn btn-success btn-sm">
-                        View Post
+
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#viewpost" wire:click="viewUserPosts({{$posts->id}})">
+                        View
                     </button>
+
+                    @include('livewire.posts.view')
+
                 </td>
     
             </tr>
