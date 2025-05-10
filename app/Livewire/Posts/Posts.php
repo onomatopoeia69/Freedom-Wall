@@ -25,7 +25,7 @@ class Posts extends Component
 
 
     
-
+    #[On('postCreated')]
     public function render()
     {
 

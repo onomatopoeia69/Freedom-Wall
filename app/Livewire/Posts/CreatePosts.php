@@ -36,6 +36,7 @@ class CreatePosts extends Component
         DB::commit();
 
         $this->hardReset();
+        $this->dispatch('postCreated');
 
        }catch(\Exception $e)
        {

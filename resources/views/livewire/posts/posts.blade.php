@@ -7,7 +7,7 @@
     </thead>
     @forelse ( $post as $posts)
     <tbody wire:key='key-{{$posts->id}}'>
-        <tr wire:poll>
+        <tr>
             <td>{{$posts->header}}</td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm" wire:click="$dispatch('deleteOpt', { id: {{ $posts->id }}, name: '{{ $posts->header }}' })">
